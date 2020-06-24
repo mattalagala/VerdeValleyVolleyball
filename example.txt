@@ -1,0 +1,185 @@
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.IOException;
+import  java.text.DecimalFormat; 
+
+//Trial Group class
+class TrialGroup {
+
+        private String fileName;
+        private int count;
+        private int sum;
+
+        double average;
+        double sumDouble;
+        int lineValue;
+        private int sumOfSquares;
+        int lineCount = 0;
+        int totalOfSquares = 0;
+        double squareOfAverage;
+        double averageOfTheSquares;
+        public double standardDeviation;
+        public double standardDeviationRounded;
+        
+
+        
+        //Get File method      
+        public String getFileName (String fileName) throws IOException {
+           
+            return fileName;
+        }
+
+        //Opens file and returns file data as Scanner output
+        public Scanner openFile (String eachFileName) throws IOException {
+            fileName=eachFileName;
+            Scanner fileData = new Scanner(new File(fileName));
+
+            return fileData;
+        }
+
+        //Calculates Average 
+        public double getAverage (Scanner currentData) {
+               
+            String currentLine = "";
+
+                while(currentData.hasNext()){
+                    lineCount++;
+                    count+=1;                    
+                    currentLine = currentData.nextLine();                    
+                    lineValue=Integer.parseInt(currentLine);
+                    sumDouble+=lineValue;
+                    sumOfSquares = lineValue*lineValue;
+                    totalOfSquares += sumOfSquares;
+                } 
+                
+                average = sumDouble/count;
+                return average;
+                
+        }
+
+        //Calculates Standard Deviation
+        public double getStandardDeviation () {
+            
+            squareOfAverage = Math.pow(average, 2);
+            averageOfTheSquares = totalOfSquares/count;
+            standardDeviation = Math.sqrt(averageOfTheSquares - squareOfAverage);
+
+            return standardDeviation;
+            
+        }
+
+        //Round about way to return Average
+        public double generateStatistics () {
+
+            DecimalFormat sDev = new DecimalFormat("##.00");
+            double standardDeviationRounded = Double.parseDouble(sDev.format(standardDeviation));
+            
+            return average;
+        }
+
+        
+        //Constructor
+        TrialGroup (String fileName) throws IOException{
+            getFileName(fileName);
+            Scanner currentData = openFile(fileName);
+            getAverage(currentData);
+            getStandardDeviation();
+            generateStatistics();
+        }
+
+
+
+    }
+
+//Main class
+class PeppersPillMill {
+    
+        static Scanner scnr = new Scanner(System.in);
+
+    // Takes user input and passes it to Trial Group Constructor
+    public static String getUserInputFile () {
+        
+        String userInput = " ";
+        System.out.println("Please enter data file name: ");
+        userInput = scnr.nextLine();       
+       
+        return userInput;
+    }
+    
+    //Takes user input for where to store file
+    public static String getUserOutputFile () {
+                
+        String userOutput = " ";
+        System.out.println("Please enter output file name: ");
+        userOutput = scnr.nextLine();
+
+        return userOutput;
+    }
+
+    //Function to compare the results of each dataset and standard deviation
+    public static boolean getResult (double val1, double val2, double stdDev1) {
+        double compareVal1 = Math.abs(val1-val2);
+        double compareVal2 = Math.abs(val2-val1);
+
+        if ((compareVal1)>stdDev1) {
+            return true;
+        } else if ((compareVal2)>stdDev1) {
+            return true;
+        }
+        return false;
+    }
+
+    //Generates and outputs file
+    public static void calculateData (String userOutput, String input1, String input2, String input3, double trial1StdDev, double trial1Avg, double trial2StdDev, double trial2Avg, double trial3StdDev, double trial3Avg) throws IOException {
+        
+        //Trial 1
+        boolean trialBool1 = getResult(trial1Avg, trial2Avg, trial1StdDev);
+        boolean trialBool2 = getResult(trial1Avg, trial3Avg, trial2StdDev);
+        boolean trialBool3 = getResult(trial2Avg, trial3Avg, trial2StdDev);
+        
+        FileOutputStream myFile = new FileOutputStream(userOutput);
+        PrintWriter mYFileWriter = new PrintWriter(myFile);
+        mYFileWriter.println("Statistics:");
+        mYFileWriter.println(input1 + "\t" + trial1Avg + "\t" + trial1StdDev);
+        mYFileWriter.println(input2 + "\t" + trial2Avg + "\t" + trial2StdDev);
+        mYFileWriter.println(input3 + "\t" + trial3Avg + "\t" + trial3StdDev);
+        mYFileWriter.println("Results:");
+        mYFileWriter.println(input1 + " vs " + input2 + " : " + trialBool1);
+        mYFileWriter.println(input1 + " vs " + input3 + " : " + trialBool2);
+        mYFileWriter.println(input2 + " vs " + input3 + " : " + trialBool3);
+        mYFileWriter.close();
+
+        
+        System.out.println("Output complete!");
+
+    }
+  
+    public static void main(String[] args) throws IOException {
+        String input1 = getUserInputFile();
+        String input2 = getUserInputFile();
+        String input3 = getUserInputFile();
+
+        String userOutput = getUserOutputFile();
+
+        TrialGroup trialGroup1 = new TrialGroup(input1);
+        
+        double trial1Avg = trialGroup1.generateStatistics();
+        double trial1StdDev = trialGroup1.getStandardDeviation();
+        
+        TrialGroup trialGroup2 = new TrialGroup(input2);
+        
+        double trial2Avg = trialGroup2.generateStatistics();
+        double trial2StdDev = trialGroup2.getStandardDeviation();  
+        
+        TrialGroup trialGroup3 = new TrialGroup(input3);
+        
+        double trial3Avg = trialGroup3.generateStatistics();
+        double trial3StdDev = trialGroup3.getStandardDeviation(); 
+        
+        calculateData(userOutput, input1, input2, input3, trial1StdDev, trial1Avg, trial2StdDev, trial2Avg, trial3StdDev, trial3Avg);
+    
+    }
+
+}

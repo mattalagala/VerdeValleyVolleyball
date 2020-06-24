@@ -1,3 +1,4 @@
+import java.util.Currency;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -5,7 +6,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 
-class VerdeValleyVolleyball {
+class Roster {
     static Scanner scnr = new Scanner(System.in);
 
 
@@ -59,27 +60,29 @@ class VerdeValleyVolleyball {
     
 }
 
-class Main {
+class VerdeValleyVolleyball {
     static Scanner scnr = new Scanner(System.in);
 
-    String fileName = " ";
+    
 
-    public int chooseMenuItem () throws IOException {
+    public static int chooseMenuItem () throws IOException {
 
         System.out.println("Welcome to Verde Valley");
         System.out.println("Please choose from the following menu");
         int userSelect = scnr.nextInt();
-
+        
         while (userSelect <=5) {
             
             if (userSelect == 1) {
                 System.out.println("1111111111111111111");
                 System.out.println("Please provide roster file name: ");
-                fileName = scnr.nextLine();
+                String fileName = scnr.next();
                 openRoster(fileName);
                 return userSelect;
+
             } else if (userSelect == 2) {
-                System.out.println("222222222222222222222");
+                System.out.println(userSelect + "222222222222222222222");
+
                 return userSelect;
             } else if (userSelect == 3) {
                 System.out.println("333333333333333333333333");
@@ -89,19 +92,44 @@ class Main {
                 return userSelect;
             } else if (userSelect == 5) {
                 System.out.println("555555555555555555555555555");
-                break;
+                //break;
             }
             
-
-        } return userSelect;
+        }
+        return userSelect;
 
     }
     
-    public Scanner openRoster (String fileName) throws IOException {
+    public static Scanner openRoster (String fileName) throws IOException {
 
-        Scanner fileData = new Scanner(new File(fileName));
+        Scanner rosterData = new Scanner(new File(fileName));
+        int lineCount = 0;
+        int count = 0;
+        int newCount = 0;
+        int index = 0;
+        String [] myArray = new String[15];
+        while(rosterData.hasNext()){
+            lineCount++;
+            count+=1;                    
+            String currentLine = rosterData.nextLine();                    
+            // lineValue=Integer.parseInt(currentLine);
+            // sumDouble+=lineValue;
+            // sumOfSquares = lineValue*lineValue;
+            // totalOfSquares += sumOfSquares;
+            System.out.println(currentLine);
+            
 
-        return fileData;
+            if (newCount<myArray.length) {
+                
+                myArray[index] = currentLine;
+                System.out.println(myArray[index]);
+            }
+            index++;
+            newCount++;
+        } 
+        
+        System.out.println("~~~~~~~~~~~~~"+myArray[4]+"~~~~~~~~~~");
+        return rosterData;
 
     }
     
@@ -125,7 +153,7 @@ class Main {
 
     }
 
-    public void main (String [] args) throws IOException{
+    public static void main (String [] args) throws IOException{
         
         chooseMenuItem();
         
