@@ -61,7 +61,10 @@ class VerdeValleyVolleyball {
 
 class Main {
     static Scanner scnr = new Scanner(System.in);
-    public static int chooseMenuItem () {
+
+    String fileName = " ";
+
+    public int chooseMenuItem () throws IOException {
 
         System.out.println("Welcome to Verde Valley");
         System.out.println("Please choose from the following menu");
@@ -71,7 +74,9 @@ class Main {
             
             if (userSelect == 1) {
                 System.out.println("1111111111111111111");
-                openRoster();
+                System.out.println("Please provide roster file name: ");
+                fileName = scnr.nextLine();
+                openRoster(fileName);
                 return userSelect;
             } else if (userSelect == 2) {
                 System.out.println("222222222222222222222");
@@ -92,8 +97,11 @@ class Main {
 
     }
     
-    public static void openRoster () {
-        
+    public Scanner openRoster (String fileName) throws IOException {
+
+        Scanner fileData = new Scanner(new File(fileName));
+
+        return fileData;
 
     }
     
@@ -117,7 +125,7 @@ class Main {
 
     }
 
-    public static void main (String [] args) {
+    public void main (String [] args) throws IOException{
         
         chooseMenuItem();
         
