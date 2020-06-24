@@ -71,6 +71,7 @@ class Main {
             
             if (userSelect == 1) {
                 System.out.println("1111111111111111111");
+                openRoster();
                 return userSelect;
             } else if (userSelect == 2) {
                 System.out.println("222222222222222222222");
@@ -83,11 +84,36 @@ class Main {
                 return userSelect;
             } else if (userSelect == 5) {
                 System.out.println("555555555555555555555555555");
-                return userSelect;
+                break;
             }
             
 
         } return userSelect;
+
+    }
+    
+    public static void openRoster () {
+        
+
+    }
+    
+    public static void topThreeAttackers () {
+        
+
+    }
+    
+    public static void topThreeBlockers () {
+        
+
+    }
+    
+    public static void makeTeams () {
+        
+
+    }
+
+    public static void displayTeams () {
+        
 
     }
 
