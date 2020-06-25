@@ -153,6 +153,7 @@ class VerdeValleyVolleyball {
         int cols = 20;
         int j = 0;
         int k =0;
+        int p = 0;
         String charLine = " ";
         String charLine2 = " ";
         String blockArray [] = new String [rows];
