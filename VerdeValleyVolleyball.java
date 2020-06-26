@@ -60,6 +60,8 @@ public class VerdeValleyVolleyball {
                 return userSelect;
             } else if (userSelect == 3) {
                 System.out.println("333333333333333333333333");
+                chooseBlockers(openRoster());
+
                 return userSelect;
             } else if (userSelect == 4) {
                 System.out.println("444444444444444444444444");
@@ -112,15 +114,15 @@ public class VerdeValleyVolleyball {
         
     }
 
-
-        
-    public static void chooseBlockers(ArrayList <player> newPlayer){
-        List<player> blockPlayers = newPlayer.stream()
+    public static void chooseBlockers(ArrayList <player> nePlayer){
+        List<player> blockPlayers = nePlayer.stream()
                     .sorted(Comparator.comparing(person -> person.block))
                     .collect(Collectors.toList());
                     Collections.reverse(blockPlayers);
                     
-        blockPlayers.stream().limit(3).forEach(person-> System.out.println(person.name + " " + person.block));
+        blockPlayers.stream().limit(5).forEach(person-> System.out.println(person.name + " " + person.block));
+
+
         
         
            }   
